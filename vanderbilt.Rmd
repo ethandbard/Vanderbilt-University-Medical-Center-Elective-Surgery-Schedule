@@ -1,0 +1,126 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+library(caret)
+library(ggplot2)
+library(readxl)
+library(kableExtra)
+```
+
+# Import Data
+
+```{r}
+#Import Data
+df  <- read_xlsx('Vanderbilt Univ Case Dataset.xlsx') %>% as.data.frame()
+
+class(df)
+```
+
+```{r}
+#print first 5 rows
+df %>%
+  head()
+```
+
+```{r}
+#print df shape
+df %>% 
+  dim()
+
+#print df rows, cols
+df %>% 
+  nrow()
+
+df %>% 
+  ncol()
+
+df %>% 
+  length()
+```
+
+```{r}
+# Convert categorical variable to factor
+df <- df %>% 
+  mutate(DOW = factor(DOW, levels = c("Mon", "Tue", "Wed", "Thu", "Fri")))
+```
+
+
+
+# Exploratory Data Analysis
+
+```{r}
+#summarize
+df %>% 
+  summary()
+```
+
+```{r}
+# Correlation
+# select only numeric features
+cor_df <- df %>% 
+        select(-c(SurgDate, DOW)) %>% 
+        cor() %>% 
+        as.data.frame() %>% 
+        round(2)
+
+cor_df
+```
+
+```{r}
+#inspect Correlation values
+cor_df['Actual', 'T - 1'] #.96
+cor_df['Actual', 'T - 3'] #.91
+```
+
+```{r}
+#tabulate correlation
+cor_df %>% 
+  group_by(row.names(cor_df)) %>% 
+  summarise(Cor = Actual) %>% 
+  arrange(-Cor)
+```
+
+```{r}
+# avg, std of actual surgeries by DOW
+df %>% 
+  group_by(DOW) %>% 
+  summarise(N = n(),
+            AVG = mean(Actual),
+            SD = sd(Actual))
+```
+
+```{r}
+# Plot surgeries by DOW
+df %>% 
+  group_by(DOW) %>% 
+  summarise(AVG = mean(Actual)) %>% 
+  ggplot(aes(x = DOW, y = AVG)) + 
+  geom_bar(stat = "identity", fill = "gray", color = "black") + 
+  theme_minimal() + 
+  labs(title = "Average Number of Surgeries by Day of Week",
+       x = "",
+       y = "") + 
+  geom_text(aes(label = round(AVG, 0)), vjust = -0.5, hjust = 0.5, size = 4, position = 'stack')
+```
+
+```{r}
+#box plot
+df %>% 
+  ggplot(aes(x = DOW, y = Actual)) + 
+  geom_boxplot(fill = "gray") + 
+  theme_minimal() + 
+  labs(title = "Average Number of Surgeries by Day of Week",
+       x = "",
+       y = "")
+```
+
+```{r}
+# stats table
+
+```
+
