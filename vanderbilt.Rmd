@@ -1,15 +1,15 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output: 
+  html_notebook: 
+    theme: journal
 ---
 
+# Import Libraries
 
 ```{r}
 library(tidyverse)
-library(caret)
-library(ggplot2)
 library(readxl)
-library(kableExtra)
 ```
 
 # Import Data
@@ -49,8 +49,6 @@ df <- df %>%
   mutate(DOW = factor(DOW, levels = c("Mon", "Tue", "Wed", "Thu", "Fri")))
 ```
 
-
-
 # Exploratory Data Analysis
 
 ```{r}
@@ -85,13 +83,37 @@ cor_df %>%
   arrange(-Cor)
 ```
 
+## ggplot Visualizations
+
 ```{r}
+library(ggplot2)
 # avg, std of actual surgeries by DOW
 df %>% 
   group_by(DOW) %>% 
   summarise(N = n(),
             AVG = mean(Actual),
             SD = sd(Actual))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = Actual)) + 
+  geom_histogram(bins = 30, fill = "gray", color = "black") +
+  theme_minimal() +
+  labs(title = "Frequency of Daily Surgery Counts",
+       x = "",
+       y = "")
+```
+
+```{r}
+df %>% 
+  filter(Actual > 50) %>% 
+  ggplot(aes(x = Actual)) + 
+  geom_histogram(bins = 30, fill = "gray", color = "black") +
+  theme_minimal() +
+  labs(title = "Frequency of Daily Surgery Counts",
+       x = "",
+       y = "")
 ```
 
 ```{r}
@@ -120,7 +142,143 @@ df %>%
 ```
 
 ```{r}
-# stats table
-
+#box plot
+df %>% 
+  filter(Actual > 50) %>% 
+  ggplot(aes(x = DOW, y = Actual)) + 
+  geom_boxplot(fill = "gray") + 
+  theme_minimal() + 
+  labs(title = "Average Number of Surgeries by Day of Week",
+       x = "",
+       y = "")
 ```
 
+```{r}
+# stats table
+df %>% 
+  pivot_longer(cols = starts_with("T"), names_to = "T", values_to = "scheduled") %>% 
+  mutate(T = substr(T, nchar(T) - 1 , nchar(T))) %>% 
+  group_by(T) %>% 
+  summarise(Max = max(scheduled),
+            Mean = mean(scheduled),
+            SD = sd(scheduled)
+            )
+```
+
+# ANOVA Testing
+
+Null Hypothesis: Total surgical case volume does not differ based on the day of week Alternative Hypothesis: Total surgical case volume differs based on the day of week
+
+```{r}
+library(caret)
+model <- lm(Actual ~ DOW, data = df)
+anova(model)
+```
+
+The p value obtained from ANOVA analysis is significant (p \< 0.05)
+
+Therefore, we can conclude that there is a significant difference among treatments.
+
+We reject the null hypothesis and accept the alternative hypothesis that total surgical case volume differ by DOW
+
+```{r}
+summary(model)
+```
+
+# Forecasting (Linear Regression)
+
+Dependent variable: Actual surgery independent variables: T-28 to T-4
+
+We will not consider last 3 days for our model building:
+
+Regression Equation:
+
+$$
+y = a_1(T-28) + a_2(T-21)+ ... + a_x(T - 1) + b
+$$
+
+```{r}
+# remove outliers
+df <- df %>% 
+  filter(Actual > 50)
+```
+
+```{r}
+# define models
+
+#restrict df to variables we're using
+df <- df %>% 
+  select(starts_with(c("T", "A")))
+
+#baseline: t-28 to t-1
+m1 <- lm(Actual ~ ., data = df)
+summary(m1)
+```
+
+```{r}
+#3 days prior: t-28 to t-4
+m2 <- lm(Actual ~ `T - 28`+
+                  `T - 21`+
+                  `T - 14`+
+                  `T - 13`+
+                  `T - 12`+
+                  `T - 11`+
+                  `T - 10`+
+                  `T - 9` +
+                  `T - 8` +
+                  `T - 7` +
+                  `T - 6`+
+                  `T - 5`+
+                  `T - 4`,
+         data = df)
+summary(m2)
+```
+
+```{r}
+#7 days prior: t-28 to t-8
+m3 <- lm(Actual ~ `T - 28`+
+                  `T - 21`+
+                  `T - 14`+
+                  `T - 13`+
+                  `T - 12`+
+                  `T - 11`+
+                  `T - 10`+
+                  `T - 9` +
+                  `T - 8`,
+         data = df)
+summary(m3)
+```
+
+```{r}
+#make predictions
+p1 <- m1 %>% 
+  predict(df)
+
+p2 <- m2 %>% 
+  predict(df)
+
+p3 <- m3 %>% 
+  predict(df)
+```
+
+```{r}
+#check average daily error
+data.frame(Actual = df$Actual, #actual number of surgeries
+           `Model 1 Predictions` = p1, #Model predictions
+           Difference = abs(df$Actual - p1)) %>% #absolute value of (actual - predicted)
+  summarise(`Model 1: Average Daily Error` = round(mean(Difference))) # aggregate average and round
+```
+
+```{r}
+data.frame(Actual = df$Actual,
+           `Model 2 Predictions` = p2,
+           Difference = abs(df$Actual - p2)) %>% 
+  summarise(`Model 2: Average Daily Error` = round(mean(Difference)))
+```
+
+```{r}
+data.frame(Actual = df$Actual,
+           `Model 3 Predictions` = p3,
+           Difference = abs(df$Actual - p1)) %>% 
+  summarise(`Model 3: Average Daily Error` = round(mean(Difference)))
+```
