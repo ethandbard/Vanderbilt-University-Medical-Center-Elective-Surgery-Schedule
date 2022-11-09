@@ -1,8 +1,6 @@
 ---
-title: "R Notebook"
-output: 
-  html_notebook: 
-    theme: journal
+title: "Vanderbilt Surgery Analysis"
+output: slidy_presentation
 ---
 
 # Import Libraries
@@ -16,16 +14,16 @@ library(readxl)
 
 ```{r}
 #Import Data
-df  <- read_xlsx('Vanderbilt Univ Case Dataset.xlsx') %>% as.data.frame()
-
-class(df)
+df  <- read_xlsx('Vanderbilt Univ Case Dataset.xlsx')
 ```
 
 ```{r}
-#print first 5 rows
+#print first few rows
 df %>%
   head()
 ```
+
+## Inspect Dataframe
 
 ```{r}
 #print df shape
@@ -43,6 +41,8 @@ df %>%
   length()
 ```
 
+## Pre-Processing
+
 ```{r}
 # Convert categorical variable to factor
 df <- df %>% 
@@ -57,6 +57,8 @@ df %>%
   summary()
 ```
 
+## Correlation Matrix
+
 ```{r}
 # Correlation
 # select only numeric features
@@ -68,6 +70,8 @@ cor_df <- df %>%
 
 cor_df
 ```
+
+## Correlation
 
 ```{r}
 #inspect Correlation values
@@ -83,7 +87,7 @@ cor_df %>%
   arrange(-Cor)
 ```
 
-## ggplot Visualizations
+# ggplot Visualizations
 
 ```{r}
 library(ggplot2)
@@ -95,6 +99,8 @@ df %>%
             SD = sd(Actual))
 ```
 
+## Histogram
+
 ```{r}
 df %>% 
   ggplot(aes(x = Actual)) + 
@@ -104,6 +110,8 @@ df %>%
        x = "",
        y = "")
 ```
+
+## Remove Outliers
 
 ```{r}
 df %>% 
@@ -115,6 +123,8 @@ df %>%
        x = "",
        y = "")
 ```
+
+## Bar Plot
 
 ```{r}
 # Plot surgeries by DOW
@@ -130,6 +140,8 @@ df %>%
   geom_text(aes(label = round(AVG, 0)), vjust = -0.5, hjust = 0.5, size = 4, position = 'stack')
 ```
 
+## Box Plot
+
 ```{r}
 #box plot
 df %>% 
@@ -140,6 +152,8 @@ df %>%
        x = "",
        y = "")
 ```
+
+## Remove Outliers
 
 ```{r}
 #box plot
@@ -152,6 +166,8 @@ df %>%
        x = "",
        y = "")
 ```
+
+# Statistics
 
 ```{r}
 # stats table
@@ -167,7 +183,8 @@ df %>%
 
 # ANOVA Testing
 
-Null Hypothesis: Total surgical case volume does not differ based on the day of week Alternative Hypothesis: Total surgical case volume differs based on the day of week
+- Null Hypothesis: Total surgical case volume does not differ based on the day of week 
+- Alternative Hypothesis: Total surgical case volume differs based on the day of week
 
 ```{r}
 library(caret)
@@ -175,11 +192,15 @@ model <- lm(Actual ~ DOW, data = df)
 anova(model)
 ```
 
-The p value obtained from ANOVA analysis is significant (p \< 0.05)
+## ANOVA Results
 
-Therefore, we can conclude that there is a significant difference among treatments.
+- The p value obtained from ANOVA analysis is significant (p \< 0.05)
 
-We reject the null hypothesis and accept the alternative hypothesis that total surgical case volume differ by DOW
+- Therefore, we can conclude that there is a significant difference among treatments.
+
+- We reject the null hypothesis and accept the alternative hypothesis that total surgical case volume differ by DOW
+
+## Model Summary
 
 ```{r}
 summary(model)
@@ -187,15 +208,14 @@ summary(model)
 
 # Forecasting (Linear Regression)
 
-Dependent variable: Actual surgery independent variables: T-28 to T-4
-
-We will not consider last 3 days for our model building:
-
-Regression Equation:
+- Dependent variable: Actual surgeries
+- Independent variables: T-28 to T-1
 
 $$
 y = a_1(T-28) + a_2(T-21)+ ... + a_x(T - 1) + b
 $$
+
+## Baseline Model 
 
 ```{r}
 # remove outliers
@@ -212,8 +232,9 @@ df <- df %>%
 
 #baseline: t-28 to t-1
 m1 <- lm(Actual ~ ., data = df)
-summary(m1)
 ```
+
+## 3 Days Prior
 
 ```{r}
 #3 days prior: t-28 to t-4
@@ -234,6 +255,8 @@ m2 <- lm(Actual ~ `T - 28`+
 summary(m2)
 ```
 
+## 7 Days Prior
+
 ```{r}
 #7 days prior: t-28 to t-8
 m3 <- lm(Actual ~ `T - 28`+
@@ -249,6 +272,8 @@ m3 <- lm(Actual ~ `T - 28`+
 summary(m3)
 ```
 
+## Predictions
+
 ```{r}
 #make predictions
 p1 <- m1 %>% 
@@ -260,6 +285,8 @@ p2 <- m2 %>%
 p3 <- m3 %>% 
   predict(df)
 ```
+
+## How close are the predictions to the actual values?
 
 ```{r}
 #check average daily error

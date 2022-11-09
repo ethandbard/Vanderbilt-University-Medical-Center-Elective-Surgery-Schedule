@@ -1,0 +1,903 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Vanderbilt Surgery Analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Vanderbilt Surgery Analysis}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Import Libraries}
+\protect\hypertarget{import-libraries}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6      v purrr   0.3.5 
+## v tibble  3.1.8      v dplyr   1.0.10
+## v tidyr   1.2.1      v stringr 1.4.1 
+## v readr   2.1.3      v forcats 0.5.2 
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Import Data}
+\protect\hypertarget{import-data}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Import Data}
+\NormalTok{df  }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\StringTok{\textquotesingle{}Vanderbilt Univ Case Dataset.xlsx\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#print first few rows}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 19
+##   SurgDate            DOW   `T - 28` `T - 21` `T - 14` `T - 13` `T - 12` T - 1~1
+##   <dttm>              <chr>    <dbl>    <dbl>    <dbl>    <dbl>    <dbl>   <dbl>
+## 1 2011-10-10 00:00:00 Mon         38       45       60       63       65      70
+## 2 2011-10-11 00:00:00 Tue         35       47       65       68       78      82
+## 3 2011-10-12 00:00:00 Wed         26       43       54       62       72      72
+## 4 2011-10-13 00:00:00 Thu         28       48       65       70       72      72
+## 5 2011-10-14 00:00:00 Fri         31       40       50       50       50      54
+## 6 2011-10-17 00:00:00 Mon         41       56       65       69       72      73
+## # ... with 11 more variables: `T - 10` <dbl>, `T - 9` <dbl>, `T - 8` <dbl>,
+## #   `T - 7` <dbl>, `T - 6` <dbl>, `T - 5` <dbl>, `T - 4` <dbl>, `T - 3` <dbl>,
+## #   `T - 2` <dbl>, `T - 1` <dbl>, Actual <dbl>, and abbreviated variable name
+## #   1: `T - 11`
+\end{verbatim}
+
+\begin{block}{Inspect Dataframe}
+\protect\hypertarget{inspect-dataframe}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#print df shape}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dim}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 241  19
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#print df rows, cols}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 241
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ncol}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{length}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19
+\end{verbatim}
+\end{block}
+
+\begin{block}{Pre-Processing}
+\protect\hypertarget{pre-processing}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Convert categorical variable to factor}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{DOW =} \FunctionTok{factor}\NormalTok{(DOW, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Mon"}\NormalTok{, }\StringTok{"Tue"}\NormalTok{, }\StringTok{"Wed"}\NormalTok{, }\StringTok{"Thu"}\NormalTok{, }\StringTok{"Fri"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Exploratory Data Analysis}
+\protect\hypertarget{exploratory-data-analysis}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#summarize}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summary}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     SurgDate                      DOW         T - 28          T - 21     
+##  Min.   :2011-10-10 00:00:00.0   Mon:47   Min.   : 0.00   Min.   : 0.00  
+##  1st Qu.:2012-01-03 00:00:00.0   Tue:49   1st Qu.:28.00   1st Qu.:41.00  
+##  Median :2012-03-27 00:00:00.0   Wed:48   Median :35.00   Median :48.00  
+##  Mean   :2012-03-27 04:46:48.2   Thu:48   Mean   :34.26   Mean   :47.24  
+##  3rd Qu.:2012-06-20 00:00:00.0   Fri:49   3rd Qu.:40.00   3rd Qu.:55.00  
+##  Max.   :2012-09-14 00:00:00.0            Max.   :57.00   Max.   :73.00  
+##      T - 14          T - 13          T - 12          T - 11      
+##  Min.   : 0.00   Min.   : 0.00   Min.   :  0.0   Min.   :  0.00  
+##  1st Qu.:58.00   1st Qu.:62.00   1st Qu.: 64.0   1st Qu.: 66.00  
+##  Median :65.00   Median :69.00   Median : 72.0   Median : 74.00  
+##  Mean   :64.44   Mean   :67.82   Mean   : 70.5   Mean   : 72.37  
+##  3rd Qu.:73.00   3rd Qu.:76.00   3rd Qu.: 80.0   3rd Qu.: 82.00  
+##  Max.   :93.00   Max.   :99.00   Max.   :102.0   Max.   :106.00  
+##      T - 10           T - 9            T - 8            T - 7    
+##  Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :  0  
+##  1st Qu.: 68.00   1st Qu.: 71.00   1st Qu.: 76.00   1st Qu.: 80  
+##  Median : 77.00   Median : 79.00   Median : 85.00   Median : 87  
+##  Mean   : 74.95   Mean   : 78.04   Mean   : 82.34   Mean   : 86  
+##  3rd Qu.: 84.00   3rd Qu.: 86.00   3rd Qu.: 92.00   3rd Qu.: 95  
+##  Max.   :106.00   Max.   :112.00   Max.   :113.00   Max.   :118  
+##      T - 6            T - 5            T - 4            T - 3       
+##  Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
+##  1st Qu.: 82.00   1st Qu.: 84.00   1st Qu.: 88.00   1st Qu.: 91.00  
+##  Median : 91.00   Median : 94.00   Median : 97.00   Median :100.00  
+##  Mean   : 89.27   Mean   : 92.09   Mean   : 94.69   Mean   : 97.37  
+##  3rd Qu.: 99.00   3rd Qu.:103.00   3rd Qu.:106.00   3rd Qu.:107.00  
+##  Max.   :121.00   Max.   :121.00   Max.   :124.00   Max.   :127.00  
+##      T - 2           T - 1         Actual     
+##  Min.   :  0.0   Min.   :  3   Min.   : 11.0  
+##  1st Qu.: 95.0   1st Qu.:102   1st Qu.:110.0  
+##  Median :103.0   Median :112   Median :117.0  
+##  Mean   :101.2   Mean   :110   Mean   :116.4  
+##  3rd Qu.:111.0   3rd Qu.:119   3rd Qu.:126.0  
+##  Max.   :131.0   Max.   :139   Max.   :145.0
+\end{verbatim}
+
+\begin{block}{Correlation Matrix}
+\protect\hypertarget{correlation-matrix}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Correlation}
+\CommentTok{\# select only numeric features}
+\NormalTok{cor\_df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(SurgDate, DOW)) }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{cor}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{cor\_df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        T - 28 T - 21 T - 14 T - 13 T - 12 T - 11 T - 10 T - 9 T - 8 T - 7 T - 6
+## T - 28   1.00   0.89   0.77   0.76   0.76   0.77   0.74  0.72  0.70  0.67  0.67
+## T - 21   0.89   1.00   0.87   0.86   0.85   0.84   0.82  0.81  0.79  0.77  0.77
+## T - 14   0.77   0.87   1.00   0.98   0.94   0.92   0.91  0.92  0.92  0.90  0.89
+## T - 13   0.76   0.86   0.98   1.00   0.98   0.96   0.94  0.94  0.93  0.91  0.91
+## T - 12   0.76   0.85   0.94   0.98   1.00   0.99   0.96  0.94  0.92  0.90  0.91
+## T - 11   0.77   0.84   0.92   0.96   0.99   1.00   0.98  0.95  0.92  0.90  0.91
+## T - 10   0.74   0.82   0.91   0.94   0.96   0.98   1.00  0.97  0.94  0.91  0.92
+## T - 9    0.72   0.81   0.92   0.94   0.94   0.95   0.97  1.00  0.97  0.96  0.95
+## T - 8    0.70   0.79   0.92   0.93   0.92   0.92   0.94  0.97  1.00  0.98  0.97
+## T - 7    0.67   0.77   0.90   0.91   0.90   0.90   0.91  0.96  0.98  1.00  0.98
+## T - 6    0.67   0.77   0.89   0.91   0.91   0.91   0.92  0.95  0.97  0.98  1.00
+## T - 5    0.68   0.77   0.86   0.90   0.92   0.92   0.92  0.93  0.95  0.96  0.98
+## T - 4    0.69   0.77   0.85   0.88   0.91   0.92   0.93  0.93  0.93  0.94  0.96
+## T - 3    0.69   0.76   0.85   0.87   0.89   0.91   0.93  0.92  0.92  0.93  0.95
+## T - 2    0.66   0.74   0.85   0.86   0.88   0.89   0.91  0.92  0.93  0.93  0.95
+## T - 1    0.63   0.72   0.82   0.84   0.85   0.85   0.87  0.90  0.91  0.92  0.93
+## Actual   0.61   0.70   0.80   0.81   0.82   0.82   0.84  0.87  0.89  0.90  0.90
+##        T - 5 T - 4 T - 3 T - 2 T - 1 Actual
+## T - 28  0.68  0.69  0.69  0.66  0.63   0.61
+## T - 21  0.77  0.77  0.76  0.74  0.72   0.70
+## T - 14  0.86  0.85  0.85  0.85  0.82   0.80
+## T - 13  0.90  0.88  0.87  0.86  0.84   0.81
+## T - 12  0.92  0.91  0.89  0.88  0.85   0.82
+## T - 11  0.92  0.92  0.91  0.89  0.85   0.82
+## T - 10  0.92  0.93  0.93  0.91  0.87   0.84
+## T - 9   0.93  0.93  0.92  0.92  0.90   0.87
+## T - 8   0.95  0.93  0.92  0.93  0.91   0.89
+## T - 7   0.96  0.94  0.93  0.93  0.92   0.90
+## T - 6   0.98  0.96  0.95  0.95  0.93   0.90
+## T - 5   1.00  0.98  0.96  0.96  0.94   0.90
+## T - 4   0.98  1.00  0.98  0.97  0.94   0.91
+## T - 3   0.96  0.98  1.00  0.98  0.95   0.91
+## T - 2   0.96  0.97  0.98  1.00  0.97   0.94
+## T - 1   0.94  0.94  0.95  0.97  1.00   0.96
+## Actual  0.90  0.91  0.91  0.94  0.96   1.00
+\end{verbatim}
+\end{block}
+
+\begin{block}{Correlation}
+\protect\hypertarget{correlation}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#inspect Correlation values}
+\NormalTok{cor\_df[}\StringTok{\textquotesingle{}Actual\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}T {-} 1\textquotesingle{}}\NormalTok{] }\CommentTok{\#.96}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.96
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_df[}\StringTok{\textquotesingle{}Actual\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}T {-} 3\textquotesingle{}}\NormalTok{] }\CommentTok{\#.91}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.91
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tabulate correlation}
+\NormalTok{cor\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(cor\_df)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Cor =}\NormalTok{ Actual) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 17 x 2
+##    `row.names(cor_df)`   Cor
+##    <chr>               <dbl>
+##  1 Actual               1   
+##  2 T - 1                0.96
+##  3 T - 2                0.94
+##  4 T - 3                0.91
+##  5 T - 4                0.91
+##  6 T - 5                0.9 
+##  7 T - 6                0.9 
+##  8 T - 7                0.9 
+##  9 T - 8                0.89
+## 10 T - 9                0.87
+## 11 T - 10               0.84
+## 12 T - 11               0.82
+## 13 T - 12               0.82
+## 14 T - 13               0.81
+## 15 T - 14               0.8 
+## 16 T - 21               0.7 
+## 17 T - 28               0.61
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{ggplot Visualizations}
+\protect\hypertarget{ggplot-visualizations}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\CommentTok{\# avg, std of actual surgeries by DOW}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(DOW) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{(),}
+            \AttributeTok{AVG =} \FunctionTok{mean}\NormalTok{(Actual),}
+            \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(Actual))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 4
+##   DOW       N   AVG    SD
+##   <fct> <int> <dbl> <dbl>
+## 1 Mon      47  116.  18.5
+## 2 Tue      49  119.  10.9
+## 3 Wed      48  117.  11.2
+## 4 Thu      48  124.  10.4
+## 5 Fri      49  106.  26.4
+\end{verbatim}
+
+\begin{block}{Histogram}
+\protect\hypertarget{histogram}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Actual)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{fill =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Frequency of Daily Surgery Counts"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{vanderbilt_files/figure-beamer/unnamed-chunk-11-1.pdf}
+\end{block}
+
+\begin{block}{Remove Outliers}
+\protect\hypertarget{remove-outliers}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Actual }\SpecialCharTok{\textgreater{}} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Actual)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{fill =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Frequency of Daily Surgery Counts"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{vanderbilt_files/figure-beamer/unnamed-chunk-12-1.pdf}
+\end{block}
+
+\begin{block}{Bar Plot}
+\protect\hypertarget{bar-plot}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot surgeries by DOW}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(DOW) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{AVG =} \FunctionTok{mean}\NormalTok{(Actual)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ DOW, }\AttributeTok{y =}\NormalTok{ AVG)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Number of Surgeries by Day of Week"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{""}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{round}\NormalTok{(AVG, }\DecValTok{0}\NormalTok{)), }\AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{position =} \StringTok{\textquotesingle{}stack\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{vanderbilt_files/figure-beamer/unnamed-chunk-13-1.pdf}
+\end{block}
+
+\begin{block}{Box Plot}
+\protect\hypertarget{box-plot}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#box plot}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ DOW, }\AttributeTok{y =}\NormalTok{ Actual)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Number of Surgeries by Day of Week"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{vanderbilt_files/figure-beamer/unnamed-chunk-14-1.pdf}
+\end{block}
+
+\begin{block}{Remove Outliers}
+\protect\hypertarget{remove-outliers-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#box plot}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Actual }\SpecialCharTok{\textgreater{}} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ DOW, }\AttributeTok{y =}\NormalTok{ Actual)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Number of Surgeries by Day of Week"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{vanderbilt_files/figure-beamer/unnamed-chunk-15-1.pdf}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Statistics}
+\protect\hypertarget{statistics}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# stats table}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{starts\_with}\NormalTok{(}\StringTok{"T"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"T"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"scheduled"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{T =} \FunctionTok{substr}\NormalTok{(T, }\FunctionTok{nchar}\NormalTok{(T) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ , }\FunctionTok{nchar}\NormalTok{(T))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(T) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Max =} \FunctionTok{max}\NormalTok{(scheduled),}
+            \AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(scheduled),}
+            \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(scheduled)}
+\NormalTok{            )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 16 x 4
+##    T       Max  Mean    SD
+##    <chr> <dbl> <dbl> <dbl>
+##  1 " 1"    139 110.  17.8 
+##  2 " 2"    131 101.  17.5 
+##  3 " 3"    127  97.4 17.6 
+##  4 " 4"    124  94.7 17.5 
+##  5 " 5"    121  92.1 17.4 
+##  6 " 6"    121  89.3 16.9 
+##  7 " 7"    118  86   16.1 
+##  8 " 8"    113  82.3 15.6 
+##  9 " 9"    112  78.0 15.1 
+## 10 "10"    106  74.9 15.1 
+## 11 "11"    106  72.4 15.0 
+## 12 "12"    102  70.5 14.9 
+## 13 "13"     99  67.8 14.2 
+## 14 "14"     93  64.4 13.5 
+## 15 "21"     73  47.2 11.3 
+## 16 "28"     57  34.3  9.39
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{ANOVA Testing}
+\protect\hypertarget{anova-testing}{}
+\begin{itemize}
+\tightlist
+\item
+  Null Hypothesis: Total surgical case volume does not differ based on
+  the day of week
+\item
+  Alternative Hypothesis: Total surgical case volume differs based on
+  the day of week
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'caret' was built under R version 4.2.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'caret'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     lift
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Actual }\SpecialCharTok{\textasciitilde{}}\NormalTok{ DOW, }\AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{anova}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Actual
+##            Df Sum Sq Mean Sq F value    Pr(>F)    
+## DOW         4   8909 2227.26  8.0027 4.575e-06 ***
+## Residuals 236  65682  278.31                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{block}{ANOVA Results}
+\protect\hypertarget{anova-results}{}
+\begin{itemize}
+\item
+  The p value obtained from ANOVA analysis is significant (p \textless{}
+  0.05)
+\item
+  Therefore, we can conclude that there is a significant difference
+  among treatments.
+\item
+  We reject the null hypothesis and accept the alternative hypothesis
+  that total surgical case volume differ by DOW
+\end{itemize}
+\end{block}
+
+\begin{block}{Model Summary}
+\protect\hypertarget{model-summary}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Actual ~ DOW, data = df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -100.255   -6.612    0.917    9.388   31.388 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 116.2553     2.4334  47.774   <2e-16 ***
+## DOWTue        2.8263     3.4061   0.830   0.4075    
+## DOWWed        0.7863     3.4234   0.230   0.8185    
+## DOWThu        7.8280     3.4234   2.287   0.0231 *  
+## DOWFri      -10.6431     3.4061  -3.125   0.0020 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 16.68 on 236 degrees of freedom
+## Multiple R-squared:  0.1194, Adjusted R-squared:  0.1045 
+## F-statistic: 8.003 on 4 and 236 DF,  p-value: 4.575e-06
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Forecasting (Linear Regression)}
+\protect\hypertarget{forecasting-linear-regression}{}
+\begin{itemize}
+\tightlist
+\item
+  Dependent variable: Actual surgeries
+\item
+  Independent variables: T-28 to T-1
+\end{itemize}
+
+\[
+y = a_1(T-28) + a_2(T-21)+ ... + a_x(T - 1) + b
+\] \#\# Baseline Model
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# remove outliers}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Actual }\SpecialCharTok{\textgreater{}} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# define models}
+
+\CommentTok{\#restrict df to variables we\textquotesingle{}re using}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"T"}\NormalTok{, }\StringTok{"A"}\NormalTok{)))}
+
+\CommentTok{\#baseline: t{-}28 to t{-}1}
+\NormalTok{m1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Actual }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{block}{3 Days Prior}
+\protect\hypertarget{days-prior}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#3 days prior: t{-}28 to t{-}4}
+\NormalTok{m2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Actual }\SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{T {-} 28}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 21}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 14}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 13}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 12}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 11}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 10}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 9}\StringTok{\textasciigrave{}} \SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 8}\StringTok{\textasciigrave{}} \SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 7}\StringTok{\textasciigrave{}} \SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 6}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 5}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 4}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summary}\NormalTok{(m2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Actual ~ `T - 28` + `T - 21` + `T - 14` + `T - 13` + 
+##     `T - 12` + `T - 11` + `T - 10` + `T - 9` + `T - 8` + `T - 7` + 
+##     `T - 6` + `T - 5` + `T - 4`, data = df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.4481  -5.0050  -0.3433   4.0439  20.3778 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 40.42147    3.56403  11.342  < 2e-16 ***
+## `T - 28`    -0.06401    0.10455  -0.612 0.540987    
+## `T - 21`     0.05590    0.11086   0.504 0.614580    
+## `T - 14`     0.12708    0.16275   0.781 0.435732    
+## `T - 13`    -0.06299    0.24788  -0.254 0.799632    
+## `T - 12`     0.24426    0.28491   0.857 0.392183    
+## `T - 11`    -0.71806    0.27336  -2.627 0.009218 ** 
+## `T - 10`     0.09247    0.21642   0.427 0.669591    
+## `T - 9`      0.26305    0.19766   1.331 0.184609    
+## `T - 8`      0.13929    0.20052   0.695 0.488006    
+## `T - 7`      0.18766    0.23690   0.792 0.429121    
+## `T - 6`     -0.31579    0.25461  -1.240 0.216162    
+## `T - 5`      0.22185    0.23996   0.925 0.356204    
+## `T - 4`      0.62817    0.16761   3.748 0.000227 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.521 on 223 degrees of freedom
+## Multiple R-squared:  0.705,  Adjusted R-squared:  0.6878 
+## F-statistic:    41 on 13 and 223 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{block}
+
+\begin{block}{7 Days Prior}
+\protect\hypertarget{days-prior-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#7 days prior: t{-}28 to t{-}8}
+\NormalTok{m3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Actual }\SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{T {-} 28}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 21}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 14}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 13}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 12}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 11}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 10}\StringTok{\textasciigrave{}}\SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 9}\StringTok{\textasciigrave{}} \SpecialCharTok{+}
+                  \StringTok{\textasciigrave{}}\AttributeTok{T {-} 8}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summary}\NormalTok{(m3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Actual ~ `T - 28` + `T - 21` + `T - 14` + `T - 13` + 
+##     `T - 12` + `T - 11` + `T - 10` + `T - 9` + `T - 8`, data = df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.5677  -5.4741  -0.3676   4.8009  20.2985 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 51.90611    3.56424  14.563  < 2e-16 ***
+## `T - 28`    -0.09186    0.11599  -0.792   0.4293    
+## `T - 21`     0.11727    0.12290   0.954   0.3410    
+## `T - 14`    -0.06637    0.17929  -0.370   0.7116    
+## `T - 13`    -0.45826    0.26366  -1.738   0.0836 .  
+## `T - 12`     0.62459    0.30281   2.063   0.0403 *  
+## `T - 11`    -0.45109    0.29621  -1.523   0.1292    
+## `T - 10`     0.21120    0.23143   0.913   0.3624    
+## `T - 9`      0.17423    0.21581   0.807   0.4203    
+## `T - 8`      0.69539    0.13935   4.990  1.2e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.296 on 227 degrees of freedom
+## Multiple R-squared:  0.6241, Adjusted R-squared:  0.6092 
+## F-statistic: 41.88 on 9 and 227 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{block}
+
+\begin{block}{Predictions}
+\protect\hypertarget{predictions}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#make predictions}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ m1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{predict}\NormalTok{(df)}
+
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ m2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{predict}\NormalTok{(df)}
+
+\NormalTok{p3 }\OtherTok{\textless{}{-}}\NormalTok{ m3 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{predict}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+
+\begin{block}{How close are the predictions to the actual values?}
+\protect\hypertarget{how-close-are-the-predictions-to-the-actual-values}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#check average daily error}
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Actual =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{Actual, }\CommentTok{\#actual number of surgeries}
+           \StringTok{\textasciigrave{}}\AttributeTok{Model 1 Predictions}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ p1, }\CommentTok{\#Model predictions}
+           \AttributeTok{Difference =} \FunctionTok{abs}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Actual }\SpecialCharTok{{-}}\NormalTok{ p1)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#absolute value of (actual {-} predicted)}
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Model 1: Average Daily Error}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Difference))) }\CommentTok{\# aggregate average and round}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Model 1: Average Daily Error
+## 1                            3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Actual =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{Actual,}
+           \StringTok{\textasciigrave{}}\AttributeTok{Model 2 Predictions}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ p2,}
+           \AttributeTok{Difference =} \FunctionTok{abs}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Actual }\SpecialCharTok{{-}}\NormalTok{ p2)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Model 2: Average Daily Error}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Difference)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Model 2: Average Daily Error
+## 1                            5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Actual =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{Actual,}
+           \StringTok{\textasciigrave{}}\AttributeTok{Model 3 Predictions}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ p3,}
+           \AttributeTok{Difference =} \FunctionTok{abs}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Actual }\SpecialCharTok{{-}}\NormalTok{ p1)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Model 3: Average Daily Error}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Difference)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Model 3: Average Daily Error
+## 1                            3
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\end{document}
